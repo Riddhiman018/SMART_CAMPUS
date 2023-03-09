@@ -4,6 +4,12 @@ const venue = require('../models/venues.mongo')
 const slot = require('../models/slots.mongo')
 const events = require('../models/booking_request.mongo')
 
+const instagram = require('instagram-web-api')
+const client = new instagram({
+    username:'Hello99rb0585',
+    password:'123JkLemon!@#'
+})
+
 router.get('/venues',async (req,res)=>{
     try{
         const venues = await venue.find({
@@ -90,4 +96,33 @@ router.post('/createevent',async (req,res)=>{
         })
     }
 })
+
+router.post('/uploadOnSocialMedia',async (req,res)=>{
+    try{
+        const login = await client.login()
+        if(login){
+            const photo = req.body.photoUrl
+            const uploaded = await client.uploadPhoto({photo,caption:`${req.body.caption}`,post:'feed'})
+            if(uploaded){
+                res.status(200).send({
+                    Message:'Success'
+                })
+            }
+            else{
+                res.status(200).send({
+                    Message:'failure'
+                })
+            }
+        }else{
+            res.status(200).send({
+                Message:'Failure'
+            })
+        }
+    }catch(e){
+        res.status(500).send({
+            Message:'Error'
+        })
+    }
+})
+
 module.exports = router 
