@@ -168,7 +168,7 @@ router.get('/cancelledEvents',async (req,res)=>{
     }
 })
 
-router.body('/viewParticipants',async (req,res)=>{
+router.post('/viewParticipants',async (req,res)=>{
     try{
         const participants = await registrations.find({
             EVENT_ID:req.body.bookingId
