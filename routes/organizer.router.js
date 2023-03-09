@@ -211,8 +211,8 @@ router.post('/alertParticipants',async (req,res)=>{
             from: 'yorb999@gmail.com', // sender address
             to: participants.join(","), // list of receivers
             subject: 'You have been invited', // Subject line
-            text: 'SRM Smart Campus Hackathon', // plain text body
-            html: '<b>SIIEC Welcomes you to Smart Campus Hackathon</b>' // html body
+            text: req.body.mailContent, // plain text body
+            html: `<b>${req.body.mailContent}</b>` // html body
         };
         
         // send mail with defined transport object
