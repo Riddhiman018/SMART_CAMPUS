@@ -8,10 +8,10 @@ const event_booking = new mongoose.Schema({
     type: String,
     default: "",
   },
-  // EVENT_POSTER:{
-  //     type:String,
-  //     default:''
-  // }, //url
+  EVENT_POSTER: {
+    type: String,
+    default: "",
+  }, //url
   eventStatus: {
     type: String,
     default: "", //cancelled or approved
@@ -68,10 +68,10 @@ const event_booking = new mongoose.Schema({
     type: String,
     default: "",
   }, //tech, non=tech, cultural
-  //   EVENT_SUBCATEGORY: {
-  //     type: String,
-  //     default: "",
-  //   }, // Marque, custom
+  EVENT_SUBCATEGORY: {
+    type: String,
+    default: "",
+  }, // Marque, custom
   orgID: {
     type: String,
     default: "",
@@ -80,22 +80,22 @@ const event_booking = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  //   LIVE_STATUS: {
-  //     type: String,
-  //     default: "Yes",
-  //   },
+  LIVE_STATUS: {
+    type: String,
+    default: "Yes",
+  },
   targAud: {
     type: String,
     default: "",
   },
-  // TARGET_AUDIENCE:{
-  //     type:[
-  //         {
-  //             TARGET_CATEGORY:String,
-  //             TARGET_EMAIL:String
-  //         }
-  //     ]
-  // },
+  TARGET_AUDIENCE: {
+    type: [
+      {
+        TARGET_CATEGORY: String,
+        TARGET_EMAIL: String,
+      },
+    ],
+  },
   ORGANIZING_COMMITTEE: {
     type: [
       {
@@ -111,17 +111,17 @@ const event_booking = new mongoose.Schema({
     type: String,
     default: "",
   },
-  // VOLUNTEER_COMMITTEE:{
-  //     type:[
-  //         {
-  //             PERSON_ID:String,
-  //             PERSON_NAME:String,
-  //             STATUS:{
-  //                 type:Boolean
-  //             } //if approved
-  //         }
-  //     ]
-  // }
+  VOLUNTEER_COMMITTEE: {
+    type: [
+      {
+        PERSON_ID: String,
+        PERSON_NAME: String,
+        STATUS: {
+          type: Boolean,
+        }, //if approved
+      },
+    ],
+  },
 });
 
 module.exports = mongoose.model("event_booking", event_booking);
