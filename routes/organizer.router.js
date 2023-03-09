@@ -4,11 +4,10 @@ const venue = require('../models/venues.mongo')
 const slot = require('../models/slots.mongo')
 const events = require('../models/booking_request.mongo')
 
-const instagram = require('instagram-web-api')
-const client = new instagram({
-    username:'Hello99rb0585',
-    password:'123JkLemon!@#'
-})
+const {IgApiClient} = require('instagram-private-api')
+const {get} = require('request-promise')
+const username = "Hello99rb0585"
+const pwd = "123JkLemon123!@"
 
 router.get('/venues',async (req,res)=>{
     try{
@@ -99,27 +98,22 @@ router.post('/createevent',async (req,res)=>{
 
 router.post('/uploadOnSocialMedia',async (req,res)=>{
     try{
-        const login = await client.login()
-        if(login){
-            const photo = req.body.photoUrl
-            const uploaded = await client.uploadPhoto({photo,caption:`${req.body.caption}`,post:'feed'})
-            if(uploaded){
-                res.status(200).send({
-                    Message:'Success'
-                })
-            }
-            else{
-                res.status(200).send({
-                    Message:'failure'
-                })
-            }
-        }else{
-            res.status(200).send({
-                Message:'Failure'
-            })
-        }
+        var ig = new IgApiClient()
+        ig.state.generateDevice(username)
+        await ig.account.login(username,pwd)
+        const imageBuffer = await get({
+            url:req.body.photoUrl,
+            encoding:null
+        })
+        await ig.publish.photo({
+            file:imageBuffer,
+            caption:req.body.caption
+        })
+        res.status(200).send({
+            Message:'Success'
+        })
     }catch(e){
-        console.log(e)
+        console.log(ig.state.checkpoint)
         res.status(500).send({
             Message:'Error'
         })
