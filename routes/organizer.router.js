@@ -119,6 +119,7 @@ router.post('/uploadOnSocialMedia',async (req,res)=>{
             })
         }
     }catch(e){
+        console.log(e)
         res.status(500).send({
             Message:'Error'
         })
