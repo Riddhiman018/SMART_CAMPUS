@@ -16,7 +16,7 @@ router.get('/venues',async (req,res)=>{
             })
         }
     }catch(e){
-        res.status(404).send({
+        res.status(500).send({
             Message:'Error'
         })
     }
@@ -41,7 +41,7 @@ router.post('/slots',async (req,res)=>{
             })
         }
     }catch(e){
-        res.status(404).send({
+        res.status(500).send({
             Message:'Error'
         })
     }
@@ -51,7 +51,7 @@ router.get('/upcomingevents',async (req,res)=>{
     try{
         const ev = await events.find({
             LIVE_STATUS:'Yes',
-            CURRENT_STATUS:true
+            CURRENT_STATUS:true //
         })
         if(ev){
             res.status(200).send({
@@ -65,10 +65,29 @@ router.get('/upcomingevents',async (req,res)=>{
             })
         }
     }catch(e){
-        res.status(404).send({
+        res.status(500).send({
             Message:'Error'
         })
     }
 })
-
+router.post('/createevent',async (req,res)=>{
+    try{
+        const newevent = new events(req.body)
+        const saved_event = await newevent.save()
+        if(saved_event){
+            res.status(200).send({
+                Message:'Success'
+            })
+        }
+        else{
+            res.status(200).send({
+                Message:'Failure'
+            })
+        }
+    }catch(e){
+        res.status(500).send({
+            Message:'Error'
+        })
+    }
+})
 module.exports = router 
