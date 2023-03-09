@@ -122,6 +122,75 @@ router.post('/uploadOnSocialMedia',async (req,res)=>{
     }
 })
 
+router.get('/approvedEvents',async (req,res)=>{
+    try{
+        const ev = await events.find({
+            eventStatus:'approved'
+        })
+        if(ev){
+            res.status(200).send({
+                Message:'Success',
+                approved:ev
+            })
+        }
+        else{
+            res.status(200).send({
+                Message:'Failure'
+            })
+        }
+    }catch(e){
+        res.status(500).send({
+            Message:'Error'
+        })
+    }
+})
+
+router.get('/cancelledEvents',async (req,res)=>{
+    try{
+        const ev = await events.find({
+            eventStatus:'cancelled'
+        })
+        if(ev){
+            res.status(200).send({
+                Message:'Success',
+                approved:ev
+            })
+        }
+        else{
+            res.status(200).send({
+                Message:'Failure'
+            })
+        }
+    }catch(e){
+        res.status(500).send({
+            Message:'Error'
+        })
+    }
+})
+
+router.body('/viewParticipants',async (req,res)=>{
+    try{
+        const participants = await registrations.find({
+            EVENT_ID:req.body.bookingId
+        })
+        if(participants){
+            res.status(200).send({
+                Message:'Success',
+                participants:participants                  
+            })
+        }
+        else{
+            res.status(200).send({
+                Message:'Failure' 
+            })
+        }
+    }catch(e){
+        res.status(500).send({
+            Message:'Error'
+        })
+    }
+})
+
 router.post('/alertParticipants',async (req,res)=>{
     try{
         const participants = await registrations.find({
