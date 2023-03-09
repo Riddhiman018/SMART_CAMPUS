@@ -3,11 +3,13 @@ const router = express.Router()
 const venue = require('../models/venues.mongo')
 const slot = require('../models/slots.mongo')
 const events = require('../models/booking_request.mongo')
+const registrations = require('../models/registrations.mongo')
 
 const {IgApiClient} = require('instagram-private-api')
 const {get} = require('request-promise')
 const username = "Hello99rb0585"
 const pwd = "123JkLemon123!@"
+const nodemailer = require('nodemailer')
 
 router.get('/venues',async (req,res)=>{
     try{
@@ -114,6 +116,47 @@ router.post('/uploadOnSocialMedia',async (req,res)=>{
         })
     }catch(e){
         console.log(ig.state.checkpoint)
+        res.status(500).send({
+            Message:'Error'
+        })
+    }
+})
+
+router.post('/alertParticipants',async (req,res)=>{
+    try{
+        const participants = await registrations.find({
+            EVENT_ID:req.body.bookingId
+        }).select('USER_ID')
+        let transporter = nodemailer.createTransport({
+            service: 'gmail',
+            port: 465,
+            secure: true,
+            auth: {
+                user: 'yorb999@gmail.com',
+                pass: 'fnrchrfjnpdtychl'
+            }
+        });
+        
+        // setup email data with unicode symbols
+        let mailOptions = {
+            from: 'yorb999@gmail.com', // sender address
+            to: participants.join(","), // list of receivers
+            subject: 'You have been invited', // Subject line
+            text: 'SRM Smart Campus Hackathon', // plain text body
+            html: '<b>SIIEC Welcomes you to Smart Campus Hackathon</b>' // html body
+        };
+        
+        // send mail with defined transport object
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                return console.log(error);
+            }
+            console.log('Message sent: %s', info.messageId);
+            res.status(200).send({
+                Message:'Success'
+            })
+        });
+    }catch(e){
         res.status(500).send({
             Message:'Error'
         })

@@ -79,7 +79,7 @@ const event_booking = new mongoose.Schema({
   CURRENT_STATUS: {
     type: Boolean,
     default: false,
-  },
+  }, //for infrastructure
   LIVE_STATUS: {
     type: String,
     default: "Yes",

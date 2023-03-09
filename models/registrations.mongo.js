@@ -6,7 +6,7 @@ const registrations = new mongoose.Schema({
     },
     USER_ID:{
         type:String,
-        default:''
+        default:'' //email
     },
     OD_STATUS:{
         type:Boolean,
@@ -17,3 +17,5 @@ const registrations = new mongoose.Schema({
         default:false
     }
 })
+
+module.exports = mongoose.model('registration',registrations)
