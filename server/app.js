@@ -3,6 +3,8 @@ const app = express()
 const cors = require('cors')
 const organizer_router = require('../routes/organizer.router')
 const admin_router = require('../routes/admin.router')
+const attendee_router = require('../routes/attendee.router')
+const infrastructure_router = require('../routes/infrastructure.router')
 const mongoose = require('mongoose')
 require('dotenv').config()
 
@@ -16,5 +18,7 @@ app.use(cors());
 app.use(express.json());
 app.use(organizer_router);
 app.use(admin_router);
+app.use(attendee_router);
+app.use(infrastructure_router)
 app.use(express.static(`${__dirname}/staticfiles`))
 module.exports = app

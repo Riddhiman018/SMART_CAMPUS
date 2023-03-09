@@ -41,6 +41,11 @@ router.post('/approveEventInfra',async (req,res)=>{
                 Message:'Success'
             })
         }
+        else{
+            res.status(200).send({
+                Message:'Failure'
+            })
+        }
     }catch(e){
         res.status(500).send({
             Message:'Error'
@@ -48,13 +53,28 @@ router.post('/approveEventInfra',async (req,res)=>{
     }
 })
 
-// router.post('/rejectEventInfra',async (req,res)=>{
-//     try{
+router.post('/rejectEventInfra',async (req,res)=>{
+    try{
+        const reject = await events.updateOne({
+            bookingId:req.body.bookingId
+        },{
+            CURRENT_STATUS:false
+        })
+        if(reject){
+            res.status(200).send({
+                Message:'Success'
+            })
+        }
+        else{
+            res.status(200).send({
+                Message:'Failure'
+            })
+        }
+    }catch(e){
+        res.status(500).send({
+            Message:'Error'
+        })
+    }
+})
 
-//     }catch(e){
-//         res.status(500).send({
-//             Message:'Error'
-//         })
-//     }
-// })
-
+module.exports = router
