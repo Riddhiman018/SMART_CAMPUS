@@ -96,6 +96,10 @@ const event_booking = new mongoose.Schema({
       },
     ],
   },
+  adminId:{
+    type:String,
+    default:''
+  },
   ORGANIZING_COMMITTEE: {
     type: [
       {
