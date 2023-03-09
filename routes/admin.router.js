@@ -4,7 +4,7 @@ const venue = require('../models/venues.mongo')
 const slot = require('../models/slots.mongo')
 const events = require('../models/booking_request.mongo')
 
-router.get('/pendingApprovals',async (req,res)=>{
+router.post('/pendingApprovals',async (req,res)=>{
     try{
         const ev = await events.find({
             eventStatus:"",
