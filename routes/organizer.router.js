@@ -79,6 +79,8 @@ router.get('/upcomingevents',async (req,res)=>{
 })
 router.post('/createevent',async (req,res)=>{
     try{
+        let val = Math.floor(1000 + Math.random() * 9000);
+        req.body.bookingId = val
         const newevent = new events(req.body)
         const saved_event = await newevent.save()
         if(saved_event){
