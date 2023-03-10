@@ -8,7 +8,6 @@ router.get('/pendingApprovals',async (req,res)=>{
     try{
         const ev = await events.find({
             eventStatus:"",
-            adminId:req.query.adminId
         })
         if(ev){
             res.status(200).send({
